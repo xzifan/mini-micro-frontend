@@ -66,6 +66,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     console.log('init app '+app.name)
                     if (app.resources && app.resources.length > 0) {
                         app.resources.forEach(item=>{ 
+                            // @ts-ignore
                             System.import(item).then((module)=>{
                                 if (/css/.test(item)) {
                                     const styleSheet = module.default; // A CSSStyleSheet object
