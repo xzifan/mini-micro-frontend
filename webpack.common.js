@@ -9,7 +9,7 @@ module.exports = {
     // output bundles (location)
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'miniMF.js',
+        filename: 'mini-mf.js',
     },
     // file resolutions
     resolve: {
