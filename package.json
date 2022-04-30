@@ -1,0 +1,37 @@
+{
+  "name": "mini-micro-frontend",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development && webpack serve --config ./webpack.dev.js --mode=development --progress",
+    "build": "cross-env NODE_ENV=production && webpack --config ./webpack.dev.js --mode=production --progress"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xzifan/mini-micro-frontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xzifan/mini-micro-frontend/issues"
+  },
+  "homepage": "https://github.com/xzifan/mini-micro-frontend#readme",
+  "devDependencies": {
+    "css-loader": "^6.7.1",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.6.0",
+    "node-sass": "^7.0.1",
+    "sass-loader": "^12.6.0",
+    "style-loader": "^3.3.1",
+    "systemjs": "^6.12.1",
+    "ts-loader": "^9.2.9",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.8.1",
+    "webpack-merge": "^5.8.0"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3"
+  }
+}
