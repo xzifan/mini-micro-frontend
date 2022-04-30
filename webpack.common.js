@@ -8,7 +8,7 @@ module.exports = {
     entry: './src/index.ts',
     // output bundles (location)
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'build'),
         filename: 'mini-mf.js',
     },
     // file resolutions
