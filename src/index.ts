@@ -1,8 +1,10 @@
 import './index.scss'
+import * as history from 'history'
 declare global {
     interface Window {
         miniMF?: any
         __router: any
+        __history: any
         System: any
         microAppConfig: {
             apps: MicroApp[]
@@ -27,6 +29,7 @@ interface MicroApp {
 var router = new Router();
 
 window.__router = router
+window.__history = history.createHashHistory()
 async function registerApplication(appConfig: { name: string, init: () => void, route: string, props?: Object }) {
     const container = document.createElement('div')
     container.id = appConfig.name

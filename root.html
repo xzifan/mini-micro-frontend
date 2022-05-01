@@ -15,7 +15,7 @@
         apps: [
             {
                 name: 'react-micro-app',
-                route: '/',
+                route: '/react',
                 resources: [
                     "https://mini-mf-react.vercel.app/static/js/main.js",
                     "https://mini-mf-react.vercel.app/static/css/main.css"
@@ -25,8 +25,8 @@
                 name: 'vue-micro-app',
                 route: '/vue',
                 resources: [
-                    'https://mini-mf-vue3.vercel.app/assets/index.js',
-                    'https://mini-mf-vue3.vercel.app/assets/index.css'
+                    'http://localhost:5050/assets/index.css',
+                    "http://localhost:5050/assets/index.js"
                 ]
             }
         ]
@@ -36,9 +36,9 @@
     <nav>
         <div class="menu-block">
             <ul class="navUL">
-                <li><a href="#/">react</a></li>
+                <li><a href="#/react">react</a></li>
                 <li><a href="#/vue">vue</a></li>
-                <li><a href="#/about">about</a></li>
+                <li><a href="#/vue/about">about</a></li>
             </ul>
         </div>
     </nav>
