@@ -27,16 +27,16 @@ interface MicroApp {
 var router = new Router();
 
 window.__router = router
-async function registerApplication(appConfig: {name: string, init: () => void , route: string, props?: Object}) {
+async function registerApplication(appConfig: { name: string, init: () => void, route: string, props?: Object }) {
     const container = document.createElement('div')
     container.id = appConfig.name
     container.className = 'app-container'
     document.body.appendChild(container)
-    try {       
+    try {
         appConfig.init()
-        window.__router.on(appConfig.route, function(){
+        window.__router.on(appConfig.route, function () {
             try {
-                window.microAppConfig.apps.map(app=>{
+                window.microAppConfig.apps.map(app => {
                     const container = document.getElementById(app.name)
                     if (container) {
                         if (appConfig.route === app.route) {
@@ -47,7 +47,7 @@ async function registerApplication(appConfig: {name: string, init: () => void , 
                     }
                 })
             } catch (error) {
-                throw new Error(`App ${appConfig.name}: initialization error\n ${JSON.stringify(error)}`, );
+                throw new Error(`App ${appConfig.name}: initialization error\n ${JSON.stringify(error)}`,);
             }
         })
     } catch (error) {
@@ -59,23 +59,22 @@ const miniMF = {
 }
 window.addEventListener('DOMContentLoaded', (event) => {
     console.log('DOM fully loaded and parsed', document.body.innerHTML, window.microAppConfig);
-    if (window.microAppConfig?.apps && Array.isArray(window.microAppConfig.apps)) 
+    if (window.microAppConfig?.apps && Array.isArray(window.microAppConfig.apps))
         window.microAppConfig.apps.forEach(app => {
             registerApplication({
-                name: app.name, 
-                init: ()=>{
-                    console.log('init app '+app.name)
+                name: app.name,
+                init: () => {
+                    console.log('init app ' + app.name)
                     if (app.resources && app.resources.length > 0) {
-                        app.resources.forEach(item=>{ 
-                            System.import(item).then((module: any)=>{
-                                if (/css/.test(item)) {
-                                    const styleSheet = module.default; // A CSSStyleSheet object
-                                    console.log(module)
-                                    // @ts-ignore
-                                    // document.styleSheets[document.styleSheets.length]
-                                    document.adoptedStyleSheets = [...document.adoptedStyleSheets, styleSheet];
-                                }
-                            })
+                        app.resources.forEach(item => {
+                            if (/css/.test(item)) {
+                                const style = document.createElement('link')
+                                style.type = 'text/css'
+                                style.rel = "stylesheet"
+                                style.href = item
+                                document.head.appendChild(style)
+                            } else 
+                            System.import(item)
                         })
                     }
                 },
@@ -83,10 +82,53 @@ window.addEventListener('DOMContentLoaded', (event) => {
             })
         })
 });
-window.onload = function(e) {
+window.onload = function (e) {
     console.log('window is loaded')
     window.__router.init()
 }
+
+// const fetchCSS = (url: string) => {
+//     fetch(url).then(res => {
+//         return res.body
+//     }).then(body => {
+//         if (body) {
+//             const reader = body.getReader();
+//             return new ReadableStream({
+//                 start(controller) {
+//                     // The following function handles each data chunk
+//                     function push() {
+//                         // "done" is a Boolean and value a "Uint8Array"
+//                         reader.read().then(({ done, value }) => {
+//                             // If there is no more data to read
+//                             if (done) {
+//                                 console.log('done', done);
+//                                 controller.close();
+//                                 return;
+//                             }
+//                             // Get the data and send it to the browser via the controller
+//                             controller.enqueue(value);
+//                             // Check chunks by logging to the console
+//                             console.log(done, value);
+//                             push();
+//                         })
+//                     }
+
+//                     push();
+//                 }
+//             });
+//         }
+//     }).then(stream => {
+//         // Respond with our stream
+//         return new Response(stream, { headers: { "Content-Type": "text/html" } }).text();
+//     }).then(result => {
+//         // Do things with result
+//         console.log(result);
+//         const style = document.createElement('style')
+//         //   style.type = 'css/stylesheet'
+//         style.innerHTML = result
+//         document.head.appendChild(style)
+//     });
+// }
 
 window.miniMF = miniMF
 
