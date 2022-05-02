@@ -4,6 +4,7 @@ body {
   font-size: 18px;
 }
 
+
 .show-menu {
   cursor: pointer;
 }
@@ -57,4 +58,5 @@ ul.navUL li a:hover {
 
 .app-container {
   width: 100%;
+  display: none;
 }

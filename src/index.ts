@@ -8,6 +8,7 @@ declare global {
         System: any
         microAppConfig: {
             apps: MicroApp[]
+            dependencies: string []
         }
     }
 }
@@ -27,7 +28,6 @@ interface MicroApp {
 //   );
 // @ts-ignore
 var router = new Router();
-
 window.__router = router
 window.__history = history.createHashHistory()
 async function registerApplication(appConfig: { name: string, init: () => void, route: string, props?: Object }) {
@@ -37,22 +37,6 @@ async function registerApplication(appConfig: { name: string, init: () => void, 
     document.body.appendChild(container)
     try {
         appConfig.init()
-        window.__router.on(appConfig.route, function () {
-            try {
-                window.microAppConfig.apps.map(app => {
-                    const container = document.getElementById(app.name)
-                    if (container) {
-                        if (appConfig.route === app.route) {
-                            container.style.display = 'block'
-                        } else {
-                            container.style.display = 'none'
-                        }
-                    }
-                })
-            } catch (error) {
-                throw new Error(`App ${appConfig.name}: initialization error\n ${JSON.stringify(error)}`,);
-            }
-        })
     } catch (error) {
         throw new Error(`App ${appConfig.name}: route registration error\n ${JSON.stringify(error)}`);
     }
@@ -60,8 +44,38 @@ async function registerApplication(appConfig: { name: string, init: () => void, 
 const miniMF = {
     registerApplication
 }
+const switchMicroApp = () => {
+    let microAppKey = window.__router.getRoute(0)
+    window.microAppConfig.apps.forEach(app=>{
+        const container = document.getElementById(app.name)
+        if (typeof app.route === 'undefined'){
+            if (container) container.style.display = 'block'
+        } else if ( app.route.replace('/','') === microAppKey) {
+            if (container) container.style.display = 'block'
+        } else {
+            if (container) container.style.display = 'none'
+        }
+    })
+}
+window.addEventListener ('hashchange', function (e) {
+    console.log('hash changed')
+    switchMicroApp()
+})
+window.onload = function (e) {
+    console.log('window is loaded')
+    switchMicroApp()
+}
 window.addEventListener('DOMContentLoaded', (event) => {
-    console.log('DOM fully loaded and parsed', document.body.innerHTML, window.microAppConfig);
+    console.log('DOM fully loaded and parsed');
+    if (window.microAppConfig?.dependencies && Array.isArray(window.microAppConfig.dependencies)) {
+        window.microAppConfig.dependencies.map(item=>{
+            try {
+                System.import(item)
+            } catch (error) {
+                console.error(error)
+            }
+        })
+    }
     if (window.microAppConfig?.apps && Array.isArray(window.microAppConfig.apps))
         window.microAppConfig.apps.forEach(app => {
             registerApplication({
@@ -84,11 +98,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 route: app.route
             })
         })
-});
-window.onload = function (e) {
-    console.log('window is loaded')
     window.__router.init()
-}
+});
+
 
 // const fetchCSS = (url: string) => {
 //     fetch(url).then(res => {

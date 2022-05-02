@@ -15,10 +15,9 @@
         apps: [
             {
                 name: 'react-micro-app',
-                route: '/react',
+                route: undefined,
                 resources: [
-                    "https://mini-mf-react.vercel.app/static/js/main.js",
-                    "https://mini-mf-react.vercel.app/static/css/main.css"
+                    "https://mini-mf-react.vercel.app/bundle.js",
                 ]
             }, 
             {
@@ -29,18 +28,13 @@
                     "https://mini-mf-vue3.vercel.app/assets/index.js"
                 ]
             }
+        ],
+        dependencies: [
+            "https://cdn.jsdelivr.net/npm/react@18.1.0/umd/react.production.min.js",
+            "https://cdn.jsdelivr.net/npm/react-dom@18.1.0/umd/react-dom.production.min.js"
         ]
     }
 </script>
 <body>
-    <nav>
-        <div class="menu-block">
-            <ul class="navUL">
-                <li><a href="#/react">react</a></li>
-                <li><a href="#/vue">vue</a></li>
-                <li><a href="#/vue/about">about</a></li>
-            </ul>
-        </div>
-    </nav>
 </body>
 </html>
