@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development && webpack serve --config ./webpack.dev.js --mode=development --progress",
-    "build": "cross-env NODE_ENV=production && webpack --config ./webpack.dev.js --mode=production --progress"
+    "dev": "cross-env NODE_ENV=development && webpack serve --config ./webpack.config.js --mode=development --progress",
+    "build": "cross-env NODE_ENV=production && webpack --config ./webpack.config.js --mode=production --progress"
   },
   "repository": {
     "type": "git",

@@ -6,10 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mini Micro Frontend</title>
 </head>
-<script src="https://cdn.jsdelivr.net/npm/import-map-overrides@2.2.0/dist/import-map-overrides.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@2.2.0/dist/import-map-overrides.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/director@1.2.8/build/director.min.js"></script>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<!-- <script type="systemjs-importmap">
+    {
+      "imports": {
+        "react": "https://unpkg.com/react@18/umd/react.development.js",
+        "react-dom": "https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+      }
+    }
+</script> -->
 <script>
     window.microAppConfig = {
         apps: [
@@ -28,11 +38,7 @@
                     "https://mini-mf-vue3.vercel.app/assets/index.js"
                 ]
             }
-        ],
-        dependencies: [
-            "https://cdn.jsdelivr.net/npm/react@18.1.0/umd/react.production.min.js",
-            "https://cdn.jsdelivr.net/npm/react-dom@18.1.0/umd/react-dom.production.min.js"
-        ]
+        ],    
     }
 </script>
 <body>
