@@ -54,10 +54,10 @@ const switchMicroApp = () => {
     window.microAppConfig.apps.forEach(app=>{
         const container = document.getElementById(app.name)
         if (typeof app.route === 'undefined'){
-            if (container) container.style.display = 'flex'
+            if (container) container.style.display = 'block'
         } else if ( app.route.replace('/','') === microAppKey) {
             if (!window.__microApp_ready.includes(app.name)) loadAppResources(app)
-            if (container) container.style.display = 'flex'
+            if (container) container.style.display = 'block'
         } else {
             if (container) container.style.display = 'none'
         }

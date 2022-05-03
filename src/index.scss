@@ -1,7 +1,7 @@
 .app-container {
   max-width: 1280px;
   width: 100%;
-  display: flex;
+  display: block;
   justify-content: center;
   margin: 0 auto;
   padding: var(--navigation-height, 80px) 2rem 0;
@@ -16,6 +16,9 @@
   display: inline-block;
   width: 80px;
   height: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  position: relative;
 }
 .spinner:after {
   content: " ";
