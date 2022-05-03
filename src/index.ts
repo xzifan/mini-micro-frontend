@@ -10,6 +10,7 @@ declare global {
             apps: MicroApp[]
             dependencies: string []
         }
+        __microApp_ready: string []
     }
 }
 declare var System: any
@@ -17,6 +18,7 @@ interface MicroApp {
     name: string
     route: string
     resources: string[]
+    props: Object
 }
 
 // Simple usage
@@ -34,6 +36,9 @@ async function registerApplication(appConfig: { name: string, init: () => void, 
     const container = document.createElement('div')
     container.id = appConfig.name
     container.className = 'app-container'
+    const spinner = document.createElement('div')
+    spinner.className = 'spinner'
+    container.appendChild(spinner)
     document.body.appendChild(container)
     try {
         appConfig.init()
@@ -49,13 +54,33 @@ const switchMicroApp = () => {
     window.microAppConfig.apps.forEach(app=>{
         const container = document.getElementById(app.name)
         if (typeof app.route === 'undefined'){
-            if (container) container.style.display = 'block'
+            if (container) container.style.display = 'flex'
         } else if ( app.route.replace('/','') === microAppKey) {
-            if (container) container.style.display = 'block'
+            if (!window.__microApp_ready.includes(app.name)) loadAppResources(app)
+            if (container) container.style.display = 'flex'
         } else {
             if (container) container.style.display = 'none'
         }
+
+        if (container && app.props) {
+            container.setAttribute('data-props', JSON.stringify(app.props))
+        }
     })
+}
+const loadAppResources = (app: MicroApp) => {
+    if (app.resources && app.resources.length > 0) {
+        app.resources.forEach(item => {
+            if (/css/.test(item)) {
+                const style = document.createElement('link')
+                style.type = 'text/css'
+                style.rel = "stylesheet"
+                style.href = item
+                document.head.appendChild(style)
+            } else 
+            System.import(item)
+        })
+        window.__microApp_ready.push(app.name)
+    }
 }
 window.addEventListener ('hashchange', function (e) {
     console.log('hash changed')
@@ -79,21 +104,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             window.microAppConfig.apps.forEach(app => {
                 registerApplication({
                     name: app.name,
-                    init: () => {
-                        console.log('init app ' + app.name)
-                        if (app.resources && app.resources.length > 0) {
-                            app.resources.forEach(item => {
-                                if (/css/.test(item)) {
-                                    const style = document.createElement('link')
-                                    style.type = 'text/css'
-                                    style.rel = "stylesheet"
-                                    style.href = item
-                                    document.head.appendChild(style)
-                                } else 
-                                System.import(item)
-                            })
-                        }
-                    },
+                    init: typeof app.route === 'undefined' ? ()=>loadAppResources(app) : ()=>{},
                     route: app.route
                 })
             })

@@ -1,5 +1,3 @@
-# Mini micro-frontend
-
 This is a minimal implementation of micro-frontend. 
 ## What are Micro frontends
 You might want to check these following articles: 
@@ -8,11 +6,24 @@ Michael Geers https://micro-frontends.org/
 
 Cam Jackson https://martinfowler.com/articles/micro-frontends.html
 
+## Progress
+- [x] Independent deployment
+- [] Application shell
+  - [ ] Retrieving global configurations
+  - [ ] Fetching the available routes and associated micro-frontends to load
+  - [ ] Handling errors if a micro-frontend cannot be loaded
+
+- [ ] Routing
+  - [x] Vertical split
+  - [ ] Horizontal split
+  - [x] Lazy loading
+- [ ] Micro Application communication
+
 ## Architectural details
 Currently this demo has following micro applications:
 
 - top navigation - React + [chakra UI](https://chakra-ui.com/docs/components/overview)
-- markdown editor - React + [markedjs](https://www.npmjs.com/package/marked)
+- markdown editor - React + [react-md-editor](https://uiwjs.github.io/react-md-editor/)
 - vue info page - vue3
 - solidjs (in progress)  
 

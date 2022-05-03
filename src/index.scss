@@ -1,11 +1,38 @@
 .app-container {
   max-width: 1280px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
   margin: 0 auto;
   padding: var(--navigation-height, 80px) 2rem 0;
   display: none;
 }
 
 #nav {
-  margin: 0;
-  padding: 0;
+  padding: 16px 0;
+}
+
+.spinner {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.spinner:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #000;
+  border-color: #000 transparent #000 transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
