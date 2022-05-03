@@ -26,9 +26,18 @@
                     name: 'react-micro-app',
                     route: undefined,
                     resources: [
-                        "https://mini-mf-react.vercel.app/bundle.js",
+                        "https://mini-mf-react.vercel.app/nav.js",
                     ]
-                }, 
+                }, {
+                    name: 'markdown-container',
+                    route: '/',
+                    resources: [
+                        "https://mini-mf-react.vercel.app/md.js"
+                    ],
+                    props: {
+                        markdownSource: "https://raw.githubusercontent.com/xzifan/mini-micro-frontend/main/public/index.md"
+                    }
+                },
                 {
                     name: 'vue-micro-app',
                     route: '/vue',
