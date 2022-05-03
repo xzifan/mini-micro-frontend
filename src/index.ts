@@ -67,37 +67,41 @@ window.onload = function (e) {
 }
 window.addEventListener('DOMContentLoaded', (event) => {
     console.log('DOM fully loaded and parsed');
+    let list = []
     if (window.microAppConfig?.dependencies && Array.isArray(window.microAppConfig.dependencies)) {
-        window.microAppConfig.dependencies.map(item=>{
-            try {
-                System.import(item)
-            } catch (error) {
-                console.error(error)
-            }
+        list = window.microAppConfig.dependencies.map(item=>{
+            // load vendor.js or other dependencies
+            return System.import(item)
         })
     }
-    if (window.microAppConfig?.apps && Array.isArray(window.microAppConfig.apps))
-        window.microAppConfig.apps.forEach(app => {
-            registerApplication({
-                name: app.name,
-                init: () => {
-                    console.log('init app ' + app.name)
-                    if (app.resources && app.resources.length > 0) {
-                        app.resources.forEach(item => {
-                            if (/css/.test(item)) {
-                                const style = document.createElement('link')
-                                style.type = 'text/css'
-                                style.rel = "stylesheet"
-                                style.href = item
-                                document.head.appendChild(style)
-                            } else 
-                            System.import(item)
-                        })
-                    }
-                },
-                route: app.route
+    Promise.all(list).then(()=>{
+        if (window.microAppConfig?.apps && Array.isArray(window.microAppConfig.apps)){
+            window.microAppConfig.apps.forEach(app => {
+                registerApplication({
+                    name: app.name,
+                    init: () => {
+                        console.log('init app ' + app.name)
+                        if (app.resources && app.resources.length > 0) {
+                            app.resources.forEach(item => {
+                                if (/css/.test(item)) {
+                                    const style = document.createElement('link')
+                                    style.type = 'text/css'
+                                    style.rel = "stylesheet"
+                                    style.href = item
+                                    document.head.appendChild(style)
+                                } else 
+                                System.import(item)
+                            })
+                        }
+                    },
+                    route: app.route
+                })
             })
-        })
+        } 
+    }).catch(error=>{
+        console.error(error)
+    })
+
     window.__router.init()
 });
 

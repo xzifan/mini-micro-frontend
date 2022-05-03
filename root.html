@@ -9,8 +9,8 @@
     <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.min.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.min.js"></script> REMOVED this will block React to be set as global environment -->
     <script src="https://cdn.jsdelivr.net/npm/director@1.2.8/build/director.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/react@18.1.0/umd/react.production.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.1.0/umd/react-dom.production.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/react@18.1.0/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.1.0/umd/react-dom.production.min.js"></script> -->
     <!-- <script type="systemjs-importmap">
         {
         "imports": {
@@ -30,6 +30,10 @@
                     ]
                 }, 
                 {
+                    name: 'home-solidjs',
+                    route: '/',                  
+                },
+                {
                     name: 'vue-micro-app',
                     route: '/vue',
                     resources: [
@@ -37,7 +41,11 @@
                         "https://mini-mf-vue3.vercel.app/assets/index.js"
                     ]
                 }
-            ],    
+            ],
+            dependencies: [
+                "https://cdn.jsdelivr.net/npm/react@18.1.0/umd/react.production.min.js",
+                "https://cdn.jsdelivr.net/npm/react-dom@18.1.0/umd/react-dom.production.min.js",
+            ] 
         }
     </script>
 </head>
