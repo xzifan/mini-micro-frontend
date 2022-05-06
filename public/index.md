@@ -1,4 +1,7 @@
+![](./micro-frontend.png)
+
 This is a minimal implementation of micro-frontend. 
+
 ## What are Micro frontends
 You might want to check these following articles: 
 
@@ -8,7 +11,7 @@ Cam Jackson https://martinfowler.com/articles/micro-frontends.html
 
 ## Progress
 - [x] Independent deployment
-- [] Application shell
+- [ ] Application shell
   - [ ] Retrieving global configurations
   - [ ] Fetching the available routes and associated micro-frontends to load
   - [ ] Handling errors if a micro-frontend cannot be loaded
@@ -22,10 +25,10 @@ Cam Jackson https://martinfowler.com/articles/micro-frontends.html
 ## Architectural details
 Currently this demo has following micro applications:
 
-- top navigation - React + [chakra UI](https://chakra-ui.com/docs/components/overview)
+- navigation bar - React + [Alibaba Fusion Design](https://fusion.design/pc/)
 - markdown editor - React + [react-md-editor](https://uiwjs.github.io/react-md-editor/)
 - vue info page - vue3
-- solidjs (in progress)  
+
 
 ### Routing
 
