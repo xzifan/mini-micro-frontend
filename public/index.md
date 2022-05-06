@@ -1,4 +1,4 @@
-![](./micro-frontend.png)
+![](https://raw.githubusercontent.com/xzifan/mini-micro-frontend/main/public/micro-frontend.jpg)
 
 This is a minimal implementation of micro-frontend. 
 
