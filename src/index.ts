@@ -11,6 +11,9 @@ declare global {
             dependencies: string []
         }
         __microApp_ready: string []
+        renderer: {
+            [name: string] : (element?: HTMLElement) => void 
+        }
     }
 }
 declare var System: any
@@ -67,9 +70,9 @@ const switchMicroApp = () => {
         }
     })
 }
-const loadAppResources = (app: MicroApp) => {
+const loadAppResources = async (app: MicroApp) => {
     if (app.resources && app.resources.length > 0) {
-        app.resources.forEach(item => {
+        app.resources.forEach(async (item) => {
             if (/css/.test(item)) {
                 const style = document.createElement('link')
                 style.type = 'text/css'
@@ -77,9 +80,17 @@ const loadAppResources = (app: MicroApp) => {
                 style.href = item
                 document.head.appendChild(style)
             } else 
-            System.import(item)
+            await System.import(item)
+
+            try {
+                // execute renderer once the resources are loaded
+                window.renderer[app.name]()
+            } catch (error) {
+                throw new Error(`Micro app renderer error. \n There is no corresponding renderer function for app ${app.name}`)
+            }
         })
         window.__microApp_ready.push(app.name)
+        // if (window.renderer && window.renderer[app.name])
     }
 }
 window.addEventListener ('hashchange', function (e) {
@@ -104,7 +115,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             window.microAppConfig.apps.forEach(app => {
                 registerApplication({
                     name: app.name,
-                    init: typeof app.route === 'undefined' ? ()=>loadAppResources(app) : ()=>{},
+                    init: typeof app.route === 'undefined' ? async ()=>{
+                        await loadAppResources(app)
+                    } : ()=>{},
                     route: app.route
                 })
             })
