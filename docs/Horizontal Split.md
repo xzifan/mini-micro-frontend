@@ -43,7 +43,7 @@ import { createApp } from 'vue'
 const app = createApp(/* ... */)
 
 app.mount('#root')
-```
+```        
 
 These functions are the roots of micro frontends. We can make use of these functions when we want to render a complete copy of that micro frontend application.
 

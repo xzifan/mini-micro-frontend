@@ -34,7 +34,7 @@ Currently this demo has following micro applications:
 
 Hash routing is important to a spa since its an efficient and precise way of controlling content to be rendered. However, in MF, the knowledge of how the routing is being defined always needs to be clearly documented. Otherwise the `<a>` link may not work as they expect.
 
-### Resource importing
+### Configuration and resource importing
 
 All javascript dependencies are fetched by using [System.js](https://www.npmjs.com/package/systemjs)
 
@@ -67,4 +67,7 @@ Once DOM is ready, it will try to import all dependencies and bundles for each m
     }
 </script>
 ```
+
+### The initialization of MFs
+We can create a configuration json to setup the micro frontends. With these configurations, 
 

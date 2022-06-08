@@ -54,14 +54,20 @@ const miniMF = {
 }
 const switchMicroApp = () => {
     let microAppKey = window.__router.getRoute(0)
+    // check each microAppConfig according to the rule 
     window.microAppConfig.apps.forEach(app=>{
         const container = document.getElementById(app.name)
         if (typeof app.route === 'undefined'){
+            // undefined route means this microApp displays in all cases
             if (container) container.style.display = 'block'
-        } else if ( app.route.replace('/','') === microAppKey) {
+        } else if ( app.route === '/'+microAppKey) {
+            // Lazy load: 
+            // fetch resources if resource for this microApp haven't been loaded
             if (!window.__microApp_ready.includes(app.name)) loadAppResources(app)
+            // display the microApp if the current route matches
             if (container) container.style.display = 'block'
         } else {
+            // hide container if there is no match 
             if (container) container.style.display = 'none'
         }
 
@@ -93,7 +99,7 @@ const loadAppResources = async (app: MicroApp) => {
         // if (window.renderer && window.renderer[app.name])
     }
 }
-window.addEventListener ('hashchange', function (e) {
+window.addEventListener('hashchange', function (e) {
     console.log('hash changed')
     switchMicroApp()
 })
@@ -102,7 +108,6 @@ window.onload = function (e) {
     switchMicroApp()
 }
 window.addEventListener('DOMContentLoaded', (event) => {
-    console.log('DOM fully loaded and parsed');
     let list = []
     if (window.microAppConfig?.dependencies && Array.isArray(window.microAppConfig.dependencies)) {
         list = window.microAppConfig.dependencies.map(item=>{
